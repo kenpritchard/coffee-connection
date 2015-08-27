@@ -1,0 +1,35 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context=".CoffeeShopListActivity">
+
+    <!--
+    This layout is a two-pane layout for the CoffeeShops
+    master/detail flow.
+    
+    -->
+
+    <fragment
+        android:id="@+id/coffeeshop_list"
+        android:name="com.kenpritchard.mobile.coffeeconnection.CoffeeShopListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textColor="@color/primary_dark"
+        tools:layout="@android:layout/list_content" />
+
+    <FrameLayout
+        android:id="@+id/coffeeshop_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+</LinearLayout>
