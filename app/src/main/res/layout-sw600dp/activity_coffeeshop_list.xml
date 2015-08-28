@@ -18,16 +18,15 @@
     -->
 
     <fragment
-        android:id="@+id/coffeeshop_list"
         android:name="com.kenpritchard.mobile.coffeeconnection.CoffeeShopListFragment"
+        android:id="@+id/coffeeshop_list_fragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:textColor="@color/primary_dark"
-        tools:layout="@android:layout/list_content" />
+        android:layout_weight="1" />
 
-    <FrameLayout
-        android:id="@+id/coffeeshop_detail_container"
+    <fragment
+        android:name="com.kenpritchard.mobile.coffeeconnection.CoffeeShopDetailFragment"
+        android:id="@+id/coffeeshop_detail_fragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3" />

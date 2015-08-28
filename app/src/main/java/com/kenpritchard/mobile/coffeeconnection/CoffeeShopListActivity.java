@@ -34,8 +34,11 @@ public class CoffeeShopListActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coffeeshop_list);
+        if(savedInstanceState != null) {
+            return;
+        }
 
-        if (findViewById(R.id.coffeeshop_detail_container) != null) {
+        if (findViewById(R.id.coffeeshop_detail_fragment) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
             // res/values-sw600dp). If this view is present, then the
@@ -44,12 +47,14 @@ public class CoffeeShopListActivity extends Activity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((CoffeeShopListFragment) getFragmentManager()
-                    .findFragmentById(R.id.coffeeshop_list))
-                    .setActivateOnItemClick(true);
+//            ((CoffeeShopListFragment) getFragmentManager()
+//                    .findFragmentById(R.id.coffeeshop_list))
+//                    .setActivateOnItemClick(true);
+        } else {
+            CoffeeShopListFragment listFragment = new CoffeeShopListFragment();
+            listFragment.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, listFragment).commit();
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
@@ -58,24 +63,23 @@ public class CoffeeShopListActivity extends Activity
      */
     @Override
     public void onItemSelected(String id) {
+        Bundle arguments = new Bundle();
+        arguments.putString(CoffeeShopDetailFragment.ARG_ITEM_ID, id);
+        CoffeeShopDetailFragment fragment = new CoffeeShopDetailFragment();
+        fragment.setArguments(arguments);
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(CoffeeShopDetailFragment.ARG_ITEM_ID, id);
-            CoffeeShopDetailFragment fragment = new CoffeeShopDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.coffeeshop_detail_container, fragment)
-                    .commit();
+            getFragmentManager().beginTransaction().replace(R.id.coffeeshop_detail_fragment, fragment).commit();
 
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Intent detailIntent = new Intent(this, CoffeeShopDetailActivity.class);
-            detailIntent.putExtra(CoffeeShopDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+//            Intent detailIntent = new Intent(this, CoffeeShopDetailActivity.class);
+//            detailIntent.putExtra(CoffeeShopDetailFragment.ARG_ITEM_ID, id);
+//            startActivity(detailIntent);
         }
     }
 }
